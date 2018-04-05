@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+def static releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+}
+
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
@@ -8,13 +12,31 @@ android {
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
-        versionName "1.0"
+        versionName "1.0".concat("_").concat(releaseTime())
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+        }
         release {
             minifyEnabled false
+            buildConfigField "boolean", "LOG_DEBUG", "true"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def type = ""
+                if (variant.buildType.name == 'debug') {
+                    type = "_debug"
+                }
+                def fileName = "SerialPortDemo_V${defaultConfig.versionName}${type}.apk"
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
         }
     }
 }
