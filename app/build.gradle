@@ -14,6 +14,12 @@ android {
         versionCode 1
         versionName "1.0".concat("_").concat(releaseTime())
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            moduleName "serial_port"
+            ldLibs "log", "z", "m"
+//           abiFilters "armeabi", "armeabi-v7a", "x86"  //ndk 版本不能用最新的，本人测试android-ndk-r15c可以，其它的没试
+//            abiFilters "armeabi-v7a", "x86" //ndk版本17.0.4640043 rc1不支持armeabi，否则编译会出错
+        }
     }
     buildTypes {
         debug {
