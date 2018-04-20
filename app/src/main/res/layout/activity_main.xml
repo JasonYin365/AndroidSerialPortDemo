@@ -54,7 +54,7 @@
             </RadioGroup>
 
             <EditText
-                android:id="@+id/et_set_autoclear_time"
+                android:id="@+id/et_set_receive_data_linenumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="false"
@@ -96,7 +96,7 @@
             android:layout_weight="1" />
 
         <ToggleButton
-            android:id="@+id/tb_start_serialport"
+            android:id="@+id/tb_open_serialport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ON" />

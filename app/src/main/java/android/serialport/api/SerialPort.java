@@ -7,6 +7,8 @@ import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Created by yinjb on 2018/4/11.
@@ -39,7 +41,7 @@ public class SerialPort {
             }
 
         }
-//        mFd = open(device.getAbsolutePath(), baudrate, flags);
+        mFd = open(device.getAbsolutePath(), baudrate, flags);
         if (mFd == null) {
             Log.e(TAG, "native open returns null");
             throw new IOException();
@@ -49,11 +51,18 @@ public class SerialPort {
     }
 
 
+    public InputStream getInputStream() {
+        return mFileInputStream;
+    }
+
+    public OutputStream getOutputStream() {
+        return mFileOutputStream;
+    }
 
     //Definition jni method
-//    private native static FileDescriptor open(String path, int baudrate, int flags);
+    private native static FileDescriptor open(String path, int baudrate, int flags);
 
-    private native void close();
+    public native void close();
 
     static {
         System.loadLibrary("serial_port");
